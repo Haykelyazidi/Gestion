@@ -6,7 +6,7 @@ node{
       environment {
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "10.0.0.193:8090"
+        NEXUS_URL = "178.33.44.117:8081/"
         NEXUS_REPOSITORY = "maven-nexus-repo"
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
     }
@@ -31,7 +31,7 @@ node{
 			-D sonar.password=admin123 \
 			-D sonar.projectKey=Gestion  \
 			-D sonar.exclusions=vendor/**,resources/**,**/*.java \
-			-D sonar.host.url=http://10.0.0.193:9001"
+			-D sonar.host.url=http://178.33.44.117:7000"
                 }
                timeout(time: 1, unit: 'HOURS') {
                       def qg = waitForQualityGate()
