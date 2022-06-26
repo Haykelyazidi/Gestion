@@ -12,7 +12,7 @@ node{
     }
     
     stage("Git Clone"){
-        git 'http://git.sts.com/root/gestion.git'
+        git 'https://github.com/wissem007/Gestion.git'
     }
     
     stage("Maven Clean Build"){
