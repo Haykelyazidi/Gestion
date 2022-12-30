@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Page DevOps</title>
  <style type="text/css">
    
    #header, #footer {
