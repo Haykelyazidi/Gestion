@@ -7,6 +7,12 @@ pipeline {
       }
     }
 
+    stage('Build docker image') {
+      steps {
+        sh 'docker build -t wissem007/nodeapp:$BUILD_NUMBER .'
+      }
+    }
+
   }
   environment {
     DOCKERHUB_CREDENTIALS = 'docker-hub-wissem'
