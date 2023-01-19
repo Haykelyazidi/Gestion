@@ -7,9 +7,9 @@ pipeline {
       }
     }
 
-    stage('Build docker image') {
+    stage('Maven Clean Build') {
       steps {
-        sh 'docker build -t wissem007/nodeapp:$BUILD_NUMBER .'
+        sh 'mvn package -DskipTests=true'
       }
     }
 
