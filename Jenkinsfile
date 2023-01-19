@@ -8,4 +8,7 @@ pipeline {
     }
 
   }
+  environment {
+    DOCKERHUB_CREDENTIALS = 'docker-hub-wissem'
+  }
 }
