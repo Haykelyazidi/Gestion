@@ -9,9 +9,21 @@ pipeline {
           }
         }
 
-        stage('') {
+        stage('error') {
           steps {
             echo 'Clonage termine'
+          }
+        }
+
+        stage('test3') {
+          steps {
+            echo 'test4'
+          }
+        }
+
+        stage('test4') {
+          steps {
+            echo 'test2'
           }
         }
 
