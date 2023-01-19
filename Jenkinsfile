@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Git Check Out') {
       steps {
-        git(url: 'ps://github.com/wissem007/Gestion.git', branch: 'master')
+        git(url: 'https://github.com/wissem007/Gestion.git', branch: 'master')
       }
     }
 
