@@ -29,7 +29,7 @@
 	  
 	  </br>
           <img src="Jenkins.png"  height="300" width="300"> 
-  </center>
+  
 
 
 
