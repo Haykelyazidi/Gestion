@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.BK</groupId>
   <artifactId>Gestion</artifactId>
-  <packaging>JAR</packaging>
+  <packaging>war</packaging>
   <version>1.0.2-SNAPSHOT</version>
   <name>Gestion</name>
   <url>http://maven.apache.org</url>
