@@ -42,9 +42,10 @@ pipeline {
         steps {
             script {
         
-      sh '''rm -rf /var/jenkins_home/workspace/test/dockerimages
-cd /var/lib/jenkins/workspace/test/dockerimages
-cp /var/lib/jenkins/workspace/test/target/Gestion.war .
+      sh '''rm -rf /var/jenkins_home/workspace/cicijenkinsfile/dockerimages
+mkdir /var/lib/jenkins/workspace/cicijenkinsfile/dockerimages
+cd /var/lib/jenkins/workspace/cicijenkinsfile/dockerimages
+cp /var/lib/jenkins/workspace/cicijenkinsfile/target/Gestion.war .
 touch dockerfile
 cat <<EOT>> dockerfile
 FROM tomcat:8-jre8                          
