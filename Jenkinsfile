@@ -1,11 +1,17 @@
 pipeline {
     
+    
+    
     agent any
    
     tools {
         maven "Maven"
     }
     environment {
+        
+        project = 'ges' 
+        imageVersion = 'v' 
+        imageTag = "wissem007/${project}:${imageVersion}.${env.BUILD_NUMBER}" 
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
         NEXUS_URL = "141.95.254.226:8081"
@@ -38,35 +44,7 @@ pipeline {
     }
   }
 }   
-              stage("Build Docker Image"){
-        steps {
-            script {
-        
-      sh '''rm -rf /var/jenkins_home/workspace/cicijenkinsfile/dockerimages
-mkdir /var/lib/jenkins/workspace/cicijenkinsfile/dockerimages
-cd /var/lib/jenkins/workspace/cicijenkinsfile/dockerimages
-cp /var/lib/jenkins/workspace/cicijenkinsfile/target/Gestion.war .
-touch dockerfile
-cat <<EOT>> dockerfile
-FROM tomcat:8-jre8                          
-# MAINTAINER                                
-MAINTAINER "Wissem"                         
-# COPY WAR FILE ON TO Contaire              
-COPY ./Gestion.war /usr/local/tomcat/webapps
-CMD ["catalina.sh", "run"]
-EXPOSE 8080
-EOT
-docker build -t tom:1.0 .
-docker rm -f Gestion
-docker run -itd --name Gestion -p 8888:8080 tom:1.0'''
-    }
-        }
-    }
-        
-        
-        
-        
-          
+
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
@@ -103,6 +81,73 @@ docker run -itd --name Gestion -p 8888:8080 tom:1.0'''
             }
         }
         
-       
+        stage("Docker Image File"){
+            steps {
+                script {
+      sh '''rm -rf /var/jenkins_home/workspace/PipelineNSD/dockerimages
+cd /var/lib/jenkins/workspace/PipelineNSD/dockerimages
+cp /var/lib/jenkins/workspace/PipelineNSD/target/Gestion.war .
+touch dockerfile
+cat <<EOT>> dockerfile
+FROM tomcat:8-jre8                          
+# MAINTAINER                                
+MAINTAINER "Wissem"                         
+# COPY WAR FILE ON TO Contaire              
+COPY ./Gestion.war /usr/local/tomcat/webapps
+CMD ["catalina.sh", "run"]
+EXPOSE 8080
+EOT'''
+              }
+          }
+        }
+        stage("Build Docker Image"){
+            steps {
+                script {
+                    sh '''cd /var/lib/jenkins/workspace/PipelineNSD/dockerimages
+docker build -t ${imageTag} .''' 
+      
+              }
+          }
+        }
+          stage("Docker Push"){
+            steps {
+                script {
+                     withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh "docker push ${imageTag}"
+        }
+          
+      
+              }
+          }
+        }
+        
+        stage('Cleaning up') {
+             steps {
+                script {
+    
+        sh "docker rmi ${imageTag}"
+                       }
+                 
+                   }
+             
+        }
+        
+         stage('Docker RUN') {
+             steps {
+                script {
+        sh "docker rm -f Gestion "
+        sh "docker run -itd --name Gestion -p 8888:8080 ${imageTag}"
+                       }
+                 
+                   }
+             
+        }
+        
+      
     }
+        
+        
+        
 }
+
