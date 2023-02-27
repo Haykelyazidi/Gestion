@@ -1,44 +1,107 @@
 pipeline {
-  agent any
-  stages {
-    stage('Git Check Out') {
-      parallel {
-        stage('Git Check Out') {
-          steps {
-            git(url: 'https://github.com/wissem007/Gestion.git', branch: 'master')
-          }
+    
+    agent any
+   
+    tools {
+        maven "Maven"
+    }
+    environment {
+        NEXUS_VERSION = "nexus3"
+        NEXUS_PROTOCOL = "http"
+        NEXUS_URL = "141.95.254.226:8081"
+        NEXUS_REPOSITORY = "maven-nexus-repo"
+        NEXUS_CREDENTIAL_ID = "nexus-user-credentials"
+    }
+    stages {
+        stage("Clone code from VCS") {
+            steps {
+                script {
+                    git 'https://github.com/wissem007/Gestion.git';
+                }
+            }
         }
-
-        stage('tesst') {
-          steps {
-            echo 'Clonage termine'
-          }
-        }
-
-        stage('test3') {
-          steps {
-            echo 'test4'
-          }
-        }
-
-        stage('test4') {
-          steps {
-            echo 'test2'
-          }
-        }
-
+        stage("Maven Build") {
+            steps {
+                script {
+                   //sh "mvn package -DskipTests=true"
+                   sh "mvn -Dmaven.test.failure.igonre=true clean package"
+                   //sh "mvn clean package"
+                }
+            }
+        }  
+        stage('SonarQube analysis') {
+            steps {
+             script {
+             withSonarQubeEnv('SonarQube') {
+         sh 'mvn clean package sonar:sonar'
       }
     }
-
-    stage('Maven Clean Build') {
-      steps {
-        echo 'test'
-        sh 'mvn clean install -Dlicense.skip=true'
-      }
+  }
+}   
+              stage("Build Docker Image"){
+        steps {
+            script {
+        
+      sh '''rm -rf /var/jenkins_home/workspace/test/dockerimages
+cd /var/lib/jenkins/workspace/test/dockerimages
+cp /var/lib/jenkins/workspace/test/target/Gestion.war .
+touch dockerfile
+cat <<EOT>> dockerfile
+FROM tomcat:8-jre8                          
+# MAINTAINER                                
+MAINTAINER "Wissem"                         
+# COPY WAR FILE ON TO Contaire              
+COPY ./Gestion.war /usr/local/tomcat/webapps
+CMD ["catalina.sh", "run"]
+EXPOSE 8080
+EOT
+docker build -t tom:1.0 .
+docker rm -f Gestion
+docker run -itd --name Gestion -p 8888:8080 tom:1.0'''
     }
-
-  }
-  environment {
-    DOCKERHUB_CREDENTIALS = 'docker-hub-wissem'
-  }
+        }
+    }
+        
+        
+        
+        
+          
+        stage("Publish to Nexus Repository Manager") {
+            steps {
+                script {
+                    pom = readMavenPom file: "pom.xml";
+                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                    artifactPath = filesByGlob[0].path;
+                    artifactExists = fileExists artifactPath;
+                    if(artifactExists) {
+                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                        nexusArtifactUploader(
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: pom.groupId,
+                            version: pom.version,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: artifactPath,
+                                type: pom.packaging],
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: "pom.xml",
+                                type: "pom"]
+                            ]
+                        );
+                    } else {
+                        error "*** File: ${artifactPath}, could not be found";
+                    }
+                }
+            }
+        }
+        
+       
+    }
 }
