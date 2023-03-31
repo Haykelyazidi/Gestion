@@ -86,8 +86,8 @@ pipeline {
                 script {
       sh '''rm -rf /var/jenkins_home/workspace/dockerpipeline/dockerimages
 mkdir -p /var/jenkins_home/workspace/dockerpipeline/dockerimages
-cd /var/lib/jenkins_home/workspace/dockerpipeline/dockerimages
-cp /var/lib/jenkins_home/workspace/dockerpipeline/target/Gestion.war .
+cd /var/jenkins_home/workspace/dockerpipeline/dockerimages
+cp /var/jenkins_home/workspace/dockerpipeline/target/Gestion.war .
 touch dockerfile
 cat <<EOT>> dockerfile
 FROM tomcat:8-jre8                          
