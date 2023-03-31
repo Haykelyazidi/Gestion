@@ -84,9 +84,9 @@ pipeline {
         stage("Docker Image File"){
             steps {
                 script {
-      sh '''rm -rf /var/jenkins_home/workspace/PipelineNSD/dockerimages
-cd /var/lib/jenkins/workspace/PipelineNSD/dockerimages
-cp /var/lib/jenkins/workspace/PipelineNSD/target/Gestion.war .
+      sh '''rm -rf /var/jenkins_home/workspace/dockerpipeline/dockerimages
+cd /var/lib/jenkins/workspace/dockerpipeline/dockerimages
+cp /var/lib/jenkins/workspace/dockerpipeline/target/Gestion.war .
 touch dockerfile
 cat <<EOT>> dockerfile
 FROM tomcat:8-jre8                          
@@ -103,7 +103,7 @@ EOT'''
         stage("Build Docker Image"){
             steps {
                 script {
-                    sh '''cd /var/lib/jenkins/workspace/PipelineNSD/dockerimages
+                    sh '''cd /var/lib/jenkins/workspace/dockerpipeline/dockerimages
 docker build -t ${imageTag} .''' 
       
               }
