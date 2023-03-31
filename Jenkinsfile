@@ -104,7 +104,7 @@ EOT'''
         stage("Build Docker Image"){
             steps {
                 script {
-                    sh '''cd /var/lib/jenkins_home/workspace/dockerpipeline/dockerimages
+                    sh '''cd /var/jenkins_home/workspace/dockerpipeline/dockerimages
 docker build -t ${imageTag} .''' 
       
               }
