@@ -84,8 +84,8 @@ pipeline {
         stage("Docker Image File"){
             steps {
                 script {
-      sh '''mkdir dockerimages
-rm -rf /var/jenkins_home/workspace/dockerpipeline/dockerimages
+      sh '''rm -rf /var/jenkins_home/workspace/dockerpipeline/dockerimages
+mkdir dockerimages
 cd /var/lib/jenkins/workspace/dockerpipeline/dockerimages
 cp /var/lib/jenkins/workspace/dockerpipeline/target/Gestion.war .
 touch dockerfile
