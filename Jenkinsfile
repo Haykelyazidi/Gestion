@@ -84,10 +84,10 @@ pipeline {
         stage("Docker Image File"){
             steps {
                 script {
-      sh '''rm -rf /var/jenkins_home/workspace/dockerpipeline/dockerimages
-mkdir -p /var/jenkins_home/workspace/dockerpipeline/dockerimages
-cd /var/jenkins_home/workspace/dockerpipeline/dockerimages
-cp /var/jenkins_home/workspace/dockerpipeline/target/Gestion.war .
+      sh '''rm -rf /var/lib/jenkins/workspace/PipelineNSD/dockerimages
+mkdir -p /var/lib/jenkins/workspace/PipelineNSD/dockerimages
+cd /var/lib/jenkins/workspace/PipelineNSD/dockerimages
+cp /var/lib/jenkins/workspace/PipelineNSD/target/Gestion.war .
 touch dockerfile
 cat <<EOT>> dockerfile
 FROM tomcat:8-jre8                          
