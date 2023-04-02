@@ -4,7 +4,7 @@
   <groupId>com.WA</groupId>
   <artifactId>Gestion</artifactId>
   <packaging>war</packaging>
-  <version>1.0.3-RELEASES</version>
+  <version>1.0.4-SNAPSHOT</version>
   <name>Gestion</name>
   <url>http://maven.apache.org</url>
   <dependencies>
