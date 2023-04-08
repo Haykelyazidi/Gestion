@@ -88,6 +88,7 @@ pipeline {
 mkdir -p /var/lib/jenkins/workspace/PipelineNSD/dockerimages
 cd /var/lib/jenkins/workspace/PipelineNSD/dockerimages
 cp /var/lib/jenkins/workspace/PipelineNSD/target/Gestion.war .
+mv Gestion.war ROOT.war
 touch dockerfile
 cat <<EOT>> dockerfile
 FROM tomcat:8-jre8                          
