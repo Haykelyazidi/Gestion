@@ -40,9 +40,11 @@
 		var jour=maintenant.getDate();
 		var mois=maintenant.getMonth()+1;
 		var an=maintenant.getFullYear();
-	     
-                document.write("Nous sommes le ",jour,"/",mois,"/",an,".");
-	        
+		var heure=maintenant.getHours();
+		var minute=maintenant.getMinutes();
+		var seconde=maintenant.getSeconds();
+                //document.write("Nous sommes le ",jour,"/",mois,"/",an,".");
+		document.write("Nous sommes le ",jour,"/",mois,"/",an," et il est ",heure,":",minute,":",seconde,".");
 	</SCRIPT></center>
 
 </header>
