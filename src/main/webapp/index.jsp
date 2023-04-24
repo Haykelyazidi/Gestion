@@ -21,7 +21,8 @@
 	
 <header id="header">
 	<p>Deployment @Devops@   TALYS  pipeline 80 webhook jenkins: DevOps Tools Engineer | LPI...</p>
-	<center><p>Votre adresse IP est : <span id="ip-address"></span></p></center>
+	<center><p>Votre adresse IP du conteneur est : <span id="ip-address"></span></p></center>
+
 	</header>
 	</br></br>
 
@@ -51,6 +52,29 @@
 		document.write("Nous sommes le ",jour,"/",mois,"/",an," et il est ",heure,":",minute,":",seconde,".");
 		document.getElementById("ip-address").innerHTML = ipAddress;
 	</SCRIPT></center>
+	<script type="text/javascript">
+		// Fonction pour récupérer l'adresse IP d'un conteneur Docker
+		function getContainerIpAddress(containerName) {
+			// Créer une requête HTTP pour l'API Docker
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/containers/" + containerName + "/json", false);
+
+			// Envoyer la requête HTTP et récupérer les informations du conteneur
+			xhr.send();
+			var containerInfo = JSON.parse(xhr.responseText);
+
+			// Extraire l'adresse IP du conteneur à partir des informations réseau
+			var ipAddress = containerInfo.NetworkSettings.Networks.bridge.IPAddress;
+
+			return ipAddress;
+		}
+
+		// Récupérer l'adresse IP du conteneur "my-container"
+		var ipAddress = getContainerIpAddress("my-container");
+
+		// Afficher l'adresse IP dans la page
+		document.getElementById("ip-address").innerHTML = ipAddress;
+	</script>
 
 </header>
   
