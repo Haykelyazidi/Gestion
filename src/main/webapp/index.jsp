@@ -21,7 +21,7 @@
 	
 <header id="header">
 	<p>Deployment @Devops@   TALYS  pipeline 80 webhook jenkins: DevOps Tools Engineer | LPI...</p>
-	<p>Votre adresse IP est : <span id="ip-address"></span></p>
+	<center><p>Votre adresse IP est : <span id="ip-address"></span></p></center>
 	</header>
 	</br></br>
 
