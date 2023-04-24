@@ -4,7 +4,7 @@
 	<title>Afficher l'adresse IP d'un conteneur Docker avec JavaScript</title>
 </head>
 <body>
-	<p>L'adresse IP du conteneur "my-container" est : <span id="ip-address"></span></p>
+	<p>L'adresse IP du conteneur "Gestion" est : <span id="ip-address"></span></p>
 
 	<script type="text/javascript">
 		// Fonction pour récupérer l'adresse IP d'un conteneur Docker
@@ -24,7 +24,7 @@
 		}
 
 		// Récupérer l'adresse IP du conteneur "my-container"
-		var ipAddress = getContainerIpAddress("my-container");
+		var ipAddress = getContainerIpAddress("Gestion");
 
 		// Afficher l'adresse IP dans la page
 		document.getElementById("ip-address").innerHTML = ipAddress;
