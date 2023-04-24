@@ -43,8 +43,8 @@
 	        var heure   = now.getHours();
    		var minute  = now.getMinutes();
 		var seconde = now.getSeconds();
-                document.write("Nous sommes le ",jour,"/",mois,"/",an,".");
-	        document.write("Nous sommes le ",heure,"/",minute,"/",seconde,".");
+                document.write("Nous sommes le ",jour,"/",mois,"/",an,"/",heure,".");
+	        
 	</SCRIPT></center>
 
 </header>
