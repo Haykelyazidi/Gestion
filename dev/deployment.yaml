@@ -15,7 +15,7 @@ spec:
         app: tomcat
     spec:
       containers:
-      - image: wissem007/ges:v.106
+      - image: wissem007/ges:v.108
         name: tomcat-container
         ports:
         - containerPort: 8080
