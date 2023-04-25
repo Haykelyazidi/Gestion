@@ -21,7 +21,7 @@
 	
 <header id="header">
 	<p>Deployment @Devops@   TALYS  pipeline 99 webhook jenkins: DevOps Tools Engineer | LPI...</p>
-	<center><p>Votre adresse IP du conteneur est : <span id="ip-address"></span></p></center>
+	<p>Votre adresse IP du conteneur est : <span id="ip-address"></span></p>
 
 	</header>
 	</br></br>
