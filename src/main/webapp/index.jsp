@@ -26,7 +26,7 @@
 	</header>
 	</br></br>
 
-  <center> 
+   
 	  
 	  
 	  <h1 >  Groupe devops :)------------->Tests Jenkins |> <img src="good.png"  height="50" width="50"> </h1> 
@@ -39,7 +39,7 @@
 
 </br>
 <header id="footer">
-<center><SCRIPT LANGUAGE="JavaScript">
+<SCRIPT LANGUAGE="JavaScript">
 		var maintenant=new Date();
 		var jour=maintenant.getDate();
 		var mois=maintenant.getMonth()+1;
@@ -49,7 +49,7 @@
 		var seconde=maintenant.getSeconds();
         //document.write("Nous sommes le ",jour,"/",mois,"/",an,".");
 		document.write("Nous sommes le ",jour,"/",mois,"/",an," et il est ",heure,":",minute,":",seconde,".");
-	</SCRIPT></center>
+	</SCRIPT>
 	
 </header>
   
