@@ -112,12 +112,10 @@ docker build -t ${imageTag} .'''
                     git config --global user.name "Haykelyazidi"
                     BUILD_NUMBER=${BUILD_NUMBER}
                     sed -i "s/gestion:v.[0-9]*/gestion:v.\${BUILD_NUMBER}/" dev/deployment.yaml
-                    git add -A dev/deployment.yaml
+                    git add dev/deployment.yaml
                     git commit -m "Update deployment image to version ${imageTag}"
                     '''
-                    //git push origin main
-                    withCredentials([string(credentialsId: 'github_credentials', variable: 'token_hub')]) {
-                    // sh 'git push https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main'                    
+                    withCredentials([string(credentialsId: 'github_credentials', variable: 'token_hub')]) {                                   
                      sh 'git push https://${token_hub}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main'                   
                    
                    }
