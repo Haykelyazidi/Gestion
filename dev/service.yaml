@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: tomcat-service
 spec:
+  type: NodePort
   ports:
   - name: http
     port: 8080
