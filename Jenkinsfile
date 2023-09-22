@@ -5,7 +5,7 @@ pipeline {
     agent any
    
     tools {
-        maven "Maven"
+        maven "mvn"
     }
     environment {
         
