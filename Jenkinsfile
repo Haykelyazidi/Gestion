@@ -54,7 +54,7 @@ pipeline {
 mkdir -p /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
 cd /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
 cp /var/jenkins_home/workspace/haykel3-Gestion/target/Gestion.war .
-//mv Gestion.war ROOT.war
+
 touch dockerfile
 cat <<EOT>> dockerfile
 FROM tomcat:8-jre8                          
