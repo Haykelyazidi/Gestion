@@ -9,7 +9,7 @@ pipeline {
     }
     environment {
         
-        project = 'Gestion' 
+        project = 'gestion' 
         imageVersion = 'v' 
         imageTag = "haydevops/${project}:${imageVersion}.${env.BUILD_NUMBER}" 
         NEXUS_VERSION = "nexus3"
@@ -51,9 +51,9 @@ pipeline {
             steps {
                 script {
       sh '''rm -rf /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
-mkdir -p /var/jenkins_home/workspace/haykel3-ggestion/dockerimages
-cd /var/jenkins_home/workspace/haykel3-ggestion/dockerimages
-cp /var/jenkins_home/workspace/haykel3-ggestion/target/Gestion.war .
+mkdir -p /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
+cd /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
+cp /var/jenkins_home/workspace/haykel3-Gestion/target/Gestion.war .
 mv Gestion.war ROOT.war
 touch dockerfile
 cat <<EOT>> dockerfile
@@ -71,7 +71,7 @@ EOT'''
         stage("Build Docker Image"){
             steps {
                 script {
-                    sh '''cd /var/jenkins_home/workspace/haykel3-ggestion/dockerimages
+                    sh '''cd /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
 docker build -t ${imageTag} .''' 
       
               }
