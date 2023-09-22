@@ -111,7 +111,7 @@ docker build -t ${imageTag} .'''
                     git config --global user.email "haykel.yazidi@gmail.com"
                     git config --global user.name "Haykelyazidi"
                    
-                    sed -i "s/gestion:v*/gestion:v${env.BUILD_NUMBER}/" dev/deployment.yaml
+                    sed -i "s/gestion:v*/gestion:v\${BUILD_NUMBER}/" dev/deployment.yaml
                     git add dev/deployment.yaml
                     git commit -m "Update deployment image to version ${imageTag}"
                     '''
