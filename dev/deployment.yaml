@@ -15,7 +15,7 @@ spec:
         app: tomcat
     spec:
       containers:
-      - image: haydevops/gestion:v2524
+      - image: haydevops/gestion:v25
         name: tomcat-container
         ports:
         - containerPort: 8080
