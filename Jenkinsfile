@@ -53,8 +53,8 @@ pipeline {
       sh '''rm -rf /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
 mkdir -p /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
 cd /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
-cp /var/lib/jenkins/workspace/haykel3-Gestion/target/Gestion.war .
-mv Gestion.war ROOT.war
+//cp /var/lib/jenkins/workspace/haykel3-Gestion/target/Gestion.war .
+//mv Gestion.war ROOT.war
 touch dockerfile
 cat <<EOT>> dockerfile
 FROM tomcat:8-jre8                          
