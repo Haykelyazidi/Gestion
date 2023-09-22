@@ -100,6 +100,32 @@ docker build -t ${imageTag} .'''
                    }
              
         }
+         stage('Update Deployment File') {
+        environment {
+            GIT_REPO_NAME = "Gestion"
+            GIT_USER_NAME = "Haykelyazidi"
+        }
+        steps {
+           
+                sh '''            
+                    git config --global user.email "haykel.yazidi@gmail.com"
+                    git config --global user.name "Haykelyazidi"
+                    //BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/gestion:[0-9]*/gestion:\${imageTag}/" dev/deployment.yml
+                    git add -A dev/deployment.yml
+                    git commit -m "Update deployment image to version ${imageTag}"
+                    '''
+                    //git push origin main
+                    withCredentials([string(credentialsId: 'github_credentials', variable: 'token_hub')]) {
+                    // sh 'git push https://github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main'                    
+                     sh 'git push https://${token_hub}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main'                   
+                   
+                   }
+
+          
+        }
+    }
+  
          stage('Remove Container') {
             steps {
                 script {
