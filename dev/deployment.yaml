@@ -18,4 +18,4 @@ spec:
       - image: haydevops/gestion:v26
         name: tomcat-container
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
