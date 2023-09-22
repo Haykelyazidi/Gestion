@@ -72,7 +72,7 @@ EOT'''
             steps {
                 script {
                     sh '''cd /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
-docker build -t ${imageTag} .''' 
+docker build -t -f ${imageTag} .''' 
       
               }
           }
