@@ -50,10 +50,10 @@ pipeline {
         stage("Docker Image File"){
             steps {
                 script {
-      sh '''rm -rf /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
-mkdir -p /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
-cd /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
-//cp /var/lib/jenkins/workspace/haykel3-Gestion/target/Gestion.war .
+      sh '''rm -rf /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
+mkdir -p /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
+cd /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
+cp /var/jenkins_home/workspace/haykel3-Gestion/target/Gestion.war .
 //mv Gestion.war ROOT.war
 touch dockerfile
 cat <<EOT>> dockerfile
