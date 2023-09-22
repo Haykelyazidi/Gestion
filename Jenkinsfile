@@ -116,7 +116,7 @@ docker build -t ${imageTag} .'''
                     git commit -m "Update deployment image to version ${imageTag}"
                     '''
                     withCredentials([string(credentialsId: 'github_credentials', variable: 'token_hub')]) {                                   
-                     sh 'git push https://${token_hub}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main'                   
+                     sh 'git push https://${token_hub}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master'                   
                    
                    }
 
