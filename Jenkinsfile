@@ -9,9 +9,9 @@ pipeline {
     }
     environment {
         
-        project = 'ges' 
+        project = 'Gestion' 
         imageVersion = 'v' 
-        imageTag = "wissem007/${project}:${imageVersion}.${env.BUILD_NUMBER}" 
+        imageTag = "haydevops/${project}:${imageVersion}.${env.BUILD_NUMBER}" 
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
         NEXUS_URL = "141.95.254.226:8081"
@@ -22,7 +22,7 @@ pipeline {
         stage("Clone code from VCS") {
             steps {
                 script {
-                    git 'https://github.com/wissem007/Gestion.git';
+                    git 'https://github.com/Haykelyazidi/Gestion.git';
                 }
             }
         }
@@ -30,70 +30,36 @@ pipeline {
             steps {
                 script {
                    //sh "mvn package -DskipTests=true"
-                   sh "mvn -Dmaven.test.failure.igonre=true clean package"
-                   //sh "mvn clean package"
+                   //sh "mvn -Dmaven.test.failure.igonre=true clean package"
+                   sh "mvn clean package"
                 }
             }
         }  
-        stage('SonarQube analysis') {
-            steps {
-             script {
-             withSonarQubeEnv('SonarQube') {
-         sh 'mvn clean package sonar:sonar'
-      }
-    }
-  }
-}   
+       // stage('SonarQube analysis') {
+         //   steps {
+           //  script {
+         //    withSonarQubeEnv('SonarQube') {
+         //sh 'mvn clean package sonar:sonar'
+      //}
+   // }
+ // }
+//}   
 
-        stage("Publish to Nexus Repository Manager") {
-            steps {
-                script {
-                    pom = readMavenPom file: "pom.xml";
-                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
-                    artifactPath = filesByGlob[0].path;
-                    artifactExists = fileExists artifactPath;
-                    if(artifactExists) {
-                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
-                        nexusArtifactUploader(
-                            nexusVersion: NEXUS_VERSION,
-                            protocol: NEXUS_PROTOCOL,
-                            nexusUrl: NEXUS_URL,
-                            groupId: pom.groupId,
-                            version: pom.version,
-                            repository: NEXUS_REPOSITORY,
-                            credentialsId: NEXUS_CREDENTIAL_ID,
-                            artifacts: [
-                                [artifactId: pom.artifactId,
-                                classifier: '',
-                                file: artifactPath,
-                                type: pom.packaging],
-                                [artifactId: pom.artifactId,
-                                classifier: '',
-                                file: "pom.xml",
-                                type: "pom"]
-                            ]
-                        );
-                    } else {
-                        error "*** File: ${artifactPath}, could not be found";
-                    }
-                }
-            }
-        }
+        
         
         stage("Docker Image File"){
             steps {
                 script {
-      sh '''rm -rf /var/lib/jenkins/workspace/PipelineNSD/dockerimages
-mkdir -p /var/lib/jenkins/workspace/PipelineNSD/dockerimages
-cd /var/lib/jenkins/workspace/PipelineNSD/dockerimages
-cp /var/lib/jenkins/workspace/PipelineNSD/target/Gestion.war .
+      sh '''rm -rf /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
+mkdir -p /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
+cd /var/lib/jenkins/workspace/haykel3-Gestion/dockerimages
+cp /var/lib/jenkins/workspace/haykel3-Gestion/target/Gestion.war .
 mv Gestion.war ROOT.war
 touch dockerfile
 cat <<EOT>> dockerfile
 FROM tomcat:8-jre8                          
 # MAINTAINER                                
-MAINTAINER "Wissem"                         
+MAINTAINER "haykel"                         
 # COPY WAR FILE ON TO Contaire              
 COPY ./Gestion.war /usr/local/tomcat/webapps
 CMD ["catalina.sh", "run"]
@@ -105,7 +71,7 @@ EOT'''
         stage("Build Docker Image"){
             steps {
                 script {
-                    sh '''cd /var/jenkins_home/workspace/dockerpipeline/dockerimages
+                    sh '''cd /var/jenkins_home/workspace/haykel3-Gestion/dockerimages
 docker build -t ${imageTag} .''' 
       
               }
@@ -114,9 +80,9 @@ docker build -t ${imageTag} .'''
           stage("Docker Push"){
             steps {
                 script {
-                     withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh "docker push ${imageTag}"
+                    withCredentials([string(credentialsId: 'docker_hub', variable: 'DOCKER_CREDENTIALS')]) {
+                     sh "echo $DOCKER_CREDENTIALS | docker login -u haydevops --password-stdin"
+                     sh "docker push ${imageTag}"
         }
           
       
@@ -134,12 +100,27 @@ docker build -t ${imageTag} .'''
                    }
              
         }
-        
+         stage('Remove Container') {
+            steps {
+                script {
+                    def containerName = 'haykel_Gestion' // Remplacez par le nom de votre conteneur
+                    
+                    def containerId = sh(script: "docker ps -aq -f name=${containerName}", returnStdout: true).trim()
+                    if (containerId) {
+                        sh "docker rm -f ${containerName}"
+                        echo "Container '${containerName}' has been removed."
+                    } else {
+                        echo "No container found with the name '${containerName}'."
+                       // sh 'docker run -d --name haykel_java -p 8050:8080 ${IMAGE}'
+                    }
+                }
+            }
+        }
          stage('Docker RUN') {
              steps {
                 script {
         sh "docker rm -f Gestion "
-        sh "docker run -itd --name Gestion -p 8888:8080 ${imageTag}"
+        sh "docker run -itd --name haykel_Gestion -p 8888:8080 ${imageTag}"
                        }
                  
                    }
