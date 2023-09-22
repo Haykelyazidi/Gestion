@@ -11,7 +11,7 @@ pipeline {
         
         project = 'gestion' 
         imageVersion = 'v' 
-        imageTag = "haydevops/${project}:${imageVersion}.${env.BUILD_NUMBER}" 
+        imageTag = "haydevops/${project}:${imageVersion}${env.BUILD_NUMBER}" 
         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
         NEXUS_URL = "141.95.254.226:8081"
@@ -111,7 +111,7 @@ docker build -t ${imageTag} .'''
                     git config --global user.email "haykel.yazidi@gmail.com"
                     git config --global user.name "Haykelyazidi"
                    
-                    sed -i "s/gestion:*/gestion:\${imageTag}/" dev/deployment.yaml
+                    sed -i "s/gestion:v*/gestion:v\${env.BUILD_NUMBER}/" dev/deployment.yaml
                     git add dev/deployment.yaml
                     git commit -m "Update deployment image to version ${imageTag}"
                     '''
