@@ -140,16 +140,16 @@ docker build -t ${imageTag} .'''
                 }
             }
         }
-         stage('Docker RUN') {
-             steps {
-                script {
-        sh "docker rm -f Gestion "
-        sh "docker run -itd --name haykel_Gestion -p 8888:8080 ${imageTag}"
-                       }
+       //  stage('Docker RUN') {
+       //      steps {
+       //         script {
+       // sh "docker rm -f Gestion "
+       // sh "docker run -itd --name haykel_Gestion -p 8888:8080 ${imageTag}"
+       //                }
                  
-                   }
+       //            }
              
-        }
+       // }
         
       
     }
