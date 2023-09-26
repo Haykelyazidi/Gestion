@@ -20,7 +20,7 @@
 <body>
 	
 <header id="header">
-	<p>Deployment @Devops@   TALYS  pipeline 110 webhook jenkins: DevOps Tools Engineer | LPI...</p>
+	<p>Deployment @Devops@   HAYKEL  pipeline 110 webhook jenkins: DevOps Tools Engineer | LPI...</p>
 	<p>Votre adresse IP du conteneur est : <span id="ip-address"></span></p>
 
 	</header>
@@ -29,7 +29,7 @@
    
 	  
 	  
-	  <h1 >  Groupe devops :)------------->Tests Jenkins |> <img src="good.png"  height="50" width="50"> </h1> 
+	  <h1 >   devops :)------------->Tests Jenkins |> <img src="good.png"  height="50" width="50"> </h1> 
 	  
 	  </br>
           <img src="Jenkins.png"  height="300" width="300"> 
